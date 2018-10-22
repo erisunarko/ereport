@@ -29,18 +29,33 @@ class Login extends CI_Controller {
 		$employeeId				= $this->input->post('employee_id');
 		$employeePass			= $this->input->post('password');
 		$data['db']				= $this->Authentication_model->check_user($employeeId, $employeePass);
-		$x['y'] = $data['db']['auth']; 
+		
 		if ($data['db']['auth'] == 'true')
 		{
-			$this->load->view('pages/index', $x);
+			if ($data['db']['employee_position'] == 'it_manager')
+			{
+				$this->load->view('it_manager/dashboard');
+			}
+			elseif ($data['db']['employee_position'] == 'it_admin')
+			{
+				$this->load->view('it_admin/dashboard');	
+			}
+			elseif ($data['db']['employee_position'] == 'it_support')
+			{
+				$this->load->view('it_support/dashboard');	
+			}
+			elseif ($data['db']['employee_position'] == 'employee')
+			{
+				$this->load->view('employee/dashboard');	
+			}
 		}
 		elseif ($data['db']['auth'] == 'false')	
 		{			
-			$this->load->view('pages/login', $data);
+			$this->load->view('pages/login');
 		} 
 		elseif ($data['db']['auth'] == 'no_res')	
 		{			
-			$this->load->view('pages/login', $data);
+			$this->load->view('pages/login');
 		} 
 
 	}

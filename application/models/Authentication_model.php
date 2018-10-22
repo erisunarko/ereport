@@ -10,7 +10,7 @@
 				foreach ($query->result_array() as $dataRow) {
 					$result['employee_id']		= $dataRow['employee_id'];
 					$result['employee_password']= $dataRow['employee_password'];
-					$result['position']			= $dataRow['employee_position'];
+					$result['employee_position']= $dataRow['employee_position'];
 				
 					if (password_verify($employeePass, $result['employee_password']))
 					{

@@ -44,7 +44,7 @@
                     <div class="panel-body">
                         <?php 
                             //echo password_hash('admin', PASSWORD_BCRYPT); 
-                            var_dump($y);
+                            //var_dump($y);
                         ?>
                         <form method="POST" action="<?php echo base_url(); ?>login/auth" role="form">
                             <fieldset>
