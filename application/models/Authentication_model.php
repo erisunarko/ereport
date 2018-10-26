@@ -9,6 +9,7 @@
 			{
 				foreach ($query->result_array() as $dataRow) {
 					$result['employee_id']		= $dataRow['employee_id'];
+					$result['employee_name']	= $dataRow['employee_name'];
 					$result['employee_password']= $dataRow['employee_password'];
 					$result['employee_position']= $dataRow['employee_position'];
 				

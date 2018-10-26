@@ -260,7 +260,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">                       
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> My Ticket(s)</a>
+                            <a href="<?php echo base_url(); ?>login/auth"><i class="fa fa-dashboard fa-fw"></i> My Ticket(s)</a>
                         </li>
                         <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->

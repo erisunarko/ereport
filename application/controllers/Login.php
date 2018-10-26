@@ -3,32 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function index()
 	{
-		$this->load->view('pages/login');
+		if (isset($_SESSION['userData']) || !empty($_SESSION['userData']))
+		{
+			$this->load->view('employee/dashboard');
+		}
+		else
+		{
+			$this->load->view('pages/login');
+		}		
 	}
 
 	public function auth()
 	{
-		$this->load->model('Authentication_model');
+		$this->load->model('authentication_model');
 		$employeeId				= $this->input->post('employee_id');
 		$employeePass			= $this->input->post('password');
-		$data['db']				= $this->Authentication_model->check_user($employeeId, $employeePass);
+		$data['db']				= $this->authentication_model->check_user($employeeId, $employeePass);
 		
 		if ($data['db']['auth'] == 'true')
 		{
@@ -46,7 +38,16 @@ class Login extends CI_Controller {
 			}
 			elseif ($data['db']['employee_position'] == 'employee')
 			{
-				$this->load->view('employee/dashboard');	
+				$userData 	= array(
+					'user_id' 		=> $data['db']['employee_id'],
+					'user_name' 	=> $data['db']['employee_name'],
+					'user_position' => $data['db']['employee_position'],
+					'login_state'	=> 'loggedin'
+				);
+				$_SESSION['userData'] 	= $userData;
+				$this->load->model('getticket_model');
+				$data['dataTicket'] 	= $this->getticket_model->get_ticket();
+				$this->load->view('employee/dashboard', $data);
 			}
 		}
 		elseif ($data['db']['auth'] == 'false')	
@@ -59,4 +60,11 @@ class Login extends CI_Controller {
 		} 
 
 	}
+
+	public function logout()
+	{
+		session_destroy();
+		$this->load->view('pages/login');
+	}
+
 }
