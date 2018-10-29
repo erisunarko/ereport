@@ -135,4 +135,9 @@ class Home extends CI_Controller {
 			$this->load->view('it_manager/dashboard', $data);
 		}
 	}
+
+	public function server_status()
+	{	
+		$this->load->view('it_admin/serverstts');
+	}
 }

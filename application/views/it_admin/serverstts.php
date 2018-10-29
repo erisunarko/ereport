@@ -35,7 +35,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -266,6 +265,9 @@
                             <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> Ticket(s) Inbox</a>
                         </li>
                         <li>
+                            <a href="<?php echo base_url(); ?>home/server_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
+                        </li>
+                        <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->
                             <ul class="nav nav-second-level">
                                 <li>
@@ -277,6 +279,12 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <!-- <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        </li> 
+                        <li>
+                            <a href="<?php //echo base_url(); ?>home/crticket"><i class="fa fa-edit fa-fw"></i> Change</a>
+                        </li> -->
                         
                         <li>
                             <!-- <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a> -->
@@ -300,31 +308,44 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Change Password :</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- eri sunarko -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <form method="POST" action="<?php echo base_url(); ?>home/cpass">
-                        <label for="old_password">Old password :</label>
-                        <br>
-                        <input type="text" name="old_password" required />
-                        <br> 
-                        <label for="new_password">New password :</label>
-                        <br>
-                        <input type="text" name="new_password" required />
-                        <br>     
-                        <label for="re_newpass">Re-type new password :</label>
-                        <br>
-                        <input type="text" name="re_newpass" required />
-                        <br>                            
-                        <input type="submit" />
-                    </form>
+                    <h1 class="page-header">Server Status :</h1>
                 </div>
             </div>
-            <!-- eri sunarko -->
+
+            <!-- modified by eri sunarko : -->
+            <div class="panel panel-primary">
+                <div class="panel-heading"><i>* status updated every 5 seconds</i></div>
+                    <div class="panel-body">
+                        <?php
+                        $serverStatus = json_decode(file_get_contents('https://server-status-tsp.firebaseapp.com/status'),true);
+                            echo "<table class='table'>";
+                                echo "<th>Server ID</th>";
+                                echo "<th>Alias</th>";
+                                echo "<th>Location</th>";
+                                echo "<th>Uptime</th>";
+                                echo "<th>Status</th>";
+                                $dataLength = count($serverStatus);
+                                for ($i = 0; $i < $dataLength; $i++) {
+                                    echo "<tr>";
+                                    echo "<td>" . $serverStatus[$i]['id'] . "</td>";
+                                    echo "<td>" . $serverStatus[$i]['alias'] . "</td>";
+                                    echo "<td>" . $serverStatus[$i]['location'] . "</td>";
+                                    echo "<td>" . $serverStatus[$i]['uptime'] . "</td>";
+                                    $svrSts = $serverStatus[$i]['status'];
+                                    if ($svrSts == 'UP') {
+                                        echo "<td style='background-color:#42f448;'>" . $svrSts . "</td>";
+                                    } else {
+                                        echo "<td style='background-color:red;'>" . $svrSts . "</td>";
+                                    }
+                                    echo "</tr>";
+                                }
+                            echo "</table>";
+                        ?>
+                    </div>
+            </div>
+        </div>
+            
+            
         </div>
                     <!-- /.panel .chat-panel -->
                 </div>
@@ -353,7 +374,19 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url().'assets'; ?>/dist/js/sb-admin-2.js"></script>
-
+	
+	<script>
+		$(document).ready(function(){
+			// ~ make sure custom js loaded properly :
+			console.log('Custom Js loaded!');
+			
+			// ~ refresh page every 5 seconds :
+            setInterval(function(){
+                window.location.reload();
+            }, 5000);
+		});
+	</script>
+	
 </body>
 
 </html>

@@ -265,7 +265,7 @@
                             <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> Ticket(s) Inbox</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url(); ?>/svr_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
+                            <a href="<?php echo base_url(); ?>home/server_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
                         </li>
                         <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->
