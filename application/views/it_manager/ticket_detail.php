@@ -35,6 +35,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
@@ -264,8 +265,8 @@
                         <li>
                             <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> Ticket(s) Inbox</a>
                         </li>
-                        <li>
-                            <a href="<?php echo base_url(); ?>/svr_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
+						<li>
+                            <a href="<?php echo base_url(); ?>home/svr_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
                         </li>
                         <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->
@@ -310,77 +311,186 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
                 </div>
+                <!-- /.col-lg-12 -->
             </div>
-
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-comments fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">26</div>
+                                    <div>New Comments!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">12</div>
+                                    <div>New Tasks!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">124</div>
+                                    <div>New Orders!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-support fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">13</div>
+                                    <div>Support Tickets!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <!-- modified by eri sunarko : -->
-            <div class="panel panel-primary">
-                <div class="panel-heading">Filter ticket(s) by date :</div>
-                    <div class="panel-body">
-                        <form method="POST" action="<?php echo base_url(); ?>home/filter">
-                            Start date &nbsp; : <input type="date" name="start_date" required />
-                            <br>
-                            End date  &nbsp; : <input type="date" name="end_date" required />
-                            <br>
-                            <input type="submit" value="Filter" />
-                        </form>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr id = "table_header">
-                                <th>Ticket ID</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Date Created</th>
-                                <th>Status</th>
-                                <th>Progress</th>
-                                <th>Serviced by</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-
-                                if (isset($filterRes) || !empty($filterRes))
-                                {
-                                    //print_r($filterRes);
-                                    foreach ($filterRes as $ticket) {
-                                        echo "<tr class='clickable_row' data_href='" . $ticket['ticket_id'] . "'>";
-                                            echo "<td>" . $ticket['ticket_id'] . "</td>";
-                                            echo "<td>" . $ticket['title'] . "</td>";
-                                            echo "<td>" . $ticket['description'] . "</td>";
-                                            echo "<td>" . $ticket['date_created'] . "</td>";
-                                            echo "<td>" . $ticket['status'] . "</td>";
-                                            echo "<td>" . $ticket['progress'] . "</td>";
-                                            echo "<td>" . $ticket['service_by'] . "</td>";
-                                        echo "</tr>";
-                                    }
-                                }
-                                
-                                if (isset($dataTicket) || !empty($dataTicket))
-                                {
-                                    //print_r($dataTicket);
-                                    foreach ($dataTicket as $ticket) {
-                                        echo "<tr class='clickable_row' data_href='" . $ticket['ticket_id'] . "'>";
-                                            echo "<td>" . $ticket['ticket_id'] . "</td>";
-                                            echo "<td>" . $ticket['title'] . "</td>";
-                                            echo "<td>" . $ticket['description'] . "</td>";
-                                            echo "<td>" . $ticket['date_created'] . "</td>";
-                                            echo "<td>" . $ticket['status'] . "</td>";
-                                            echo "<td>" . $ticket['progress'] . "</td>";
-                                            echo "<td>" . $ticket['service_by'] . "</td>";
-                                        echo "</tr>";
-                                    }
-                                }
-                                
-                                ?> 
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
+			<?php
+				//print_r($dataTicket);
+				$ticketId 	= $dataTicket[0]['ticket_id'];
+				$serviceBy 	= $dataTicket[0]['service_by'];
+				$progress 	= $dataTicket[0]['progress'];
+				$status		= $dataTicket[0]['status'];
+				$dueDate	= $dataTicket[0]['due_date'];
+			?>
+			<form method="POST" action="<?php echo base_url() . '/home/upd_ticket/' . $ticketId; ?>">
+            <div class="table-responsive">
+                <table>
+                    <tr>
+						<td>Ticket ID</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td><input type="text" name="ticket_id" value="<?php echo $ticketId; ?>" disabled /></td>
+                    </tr>
+					<tr>
+						<td>Ticket Title</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td><input type="text" name="ticket_title" value="<?php echo $dataTicket[0]['title']; ?>" disabled /></td>
+                    </tr>
+					<tr>
+						<td>Ticket Description</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td><textarea name="ticket_description" disabled><?php echo $dataTicket[0]['description']; ?></textarea></td>
+                    </tr>
+					<tr>
+						<td>Service by</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td>
+							<select name="service_by">
+								<option value="not yet processed">not yet processed</option>
+								<option value="IT support-1" <?php if ($serviceBy == 'IT support-1') { echo 'selected'; } ?> >IT support-1</option>
+								<option value="IT support-2" <?php if ($serviceBy == 'IT support-2') { echo 'selected'; } ?> >IT support-2</option>
+							</select>
+						</td>
+                    </tr>
+					<tr>
+						<td>Progress</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td>
+							<select name="progress">
+								<option value="not yet processed">not yet processed</option>
+								<option value="waiting for the queue" <?php if ($progress == 'waiting for the queue') { echo 'selected'; } ?> >waiting for the queue</option>
+								<option value="on process" <?php if ($progress == 'on process') { echo 'selected'; } ?> >on process</option>
+								<option value="done" <?php if ($progress == 'done') { echo 'selected'; } ?> >done</option>
+							</select>
+						</td>
+                    </tr>
+					<tr>
+						<td>Status</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td>
+							<select name="status">
+								<option value="open" >open</option>
+								<option value="closed" <?php if ($progress == 'closed') { echo 'selected'; } ?> >closed</option>
+							</select>
+						</td>
+                    </tr>
+					<tr>
+						<td>Date created</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td><input type="text" name="datecreate" value="<?php echo $dataTicket[0]['date_created']; ?>" disabled /></td>
+                    </tr>
+					<tr>
+						<td>Duedate</td>
+						<td>&nbsp&nbsp&nbsp</td>
+						<td> : </td>
+						<td><input type="date" name="duedate" /></td>
+                    </tr>
+					<tr>
+						<td></td>
+						<td colspan="2"><input type="submit" /></td>
+						<td></td>
+						<td></td>
+                    </tr>
+                </table>
             </div>
-            
-            
+			</form>
         </div>
                     <!-- /.panel .chat-panel -->
                 </div>
@@ -417,14 +527,14 @@
 			
 			// ~ trigger on click table row :
 			$('.clickable_row').on('click', function(){
-				let rowId = $(this).attr('data_href');
-				window.location = '<?php echo base_url(); ?>' + '/home/take_action/' + rowId;
+				window.location = '<?php echo base_url(); ?>' + 'home/take_action/id';
 			});
 			
-			// ~
+			// ~ 
 		});
 	</script>
 	
 </body>
 
 </html>
+

@@ -26,15 +26,29 @@ class Login extends CI_Controller {
 		{
 			if ($data['db']['employee_position'] == 'it_manager')
 			{
-				$this->load->view('it_manager/dashboard');
+				$userData 	= array(
+					'user_id' 		=> $data['db']['employee_id'],
+					'user_name' 	=> $data['db']['employee_name'],
+					'user_position' => $data['db']['employee_position'],
+					'login_state'	=> 'loggedin'
+				);
+				$_SESSION['userData'] 	= $userData;
+				$this->load->model('getticket_model');
+				$data['dataTicket'] 	= $this->getticket_model->get_ticket();
+				$this->load->view('it_manager/dashboard', $data);	
 			}
 			elseif ($data['db']['employee_position'] == 'it_admin')
 			{
-				$this->load->view('it_admin/dashboard');	
-			}
-			elseif ($data['db']['employee_position'] == 'it_support')
-			{
-				$this->load->view('it_support/dashboard');	
+				$userData 	= array(
+					'user_id' 		=> $data['db']['employee_id'],
+					'user_name' 	=> $data['db']['employee_name'],
+					'user_position' => $data['db']['employee_position'],
+					'login_state'	=> 'loggedin'
+				);
+				$_SESSION['userData'] 	= $userData;
+				$this->load->model('getticket_model');
+				$data['dataTicket'] 	= $this->getticket_model->get_ticket();
+				$this->load->view('it_admin/dashboard', $data);	
 			}
 			elseif ($data['db']['employee_position'] == 'employee')
 			{
@@ -52,11 +66,11 @@ class Login extends CI_Controller {
 		}
 		elseif ($data['db']['auth'] == 'false')	
 		{			
-			$this->load->view('pages/login');
+			$this->load->view('pages/login', $data);
 		} 
 		elseif ($data['db']['auth'] == 'no_res')	
 		{			
-			$this->load->view('pages/login');
+			$this->load->view('pages/login', $data);
 		} 
 
 	}

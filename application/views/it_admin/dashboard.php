@@ -1,3 +1,6 @@
+<?php
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +35,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
@@ -48,7 +50,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">E-Reporting</a>
+                <a class="navbar-brand" href="<?php echo base_url(); ?>home">E-Reporting</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -242,12 +244,12 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="<?php echo base_url(); ?>home/profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="<?php echo base_url(); ?>home/setting"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="<?php echo base_url(); ?>login/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -260,7 +262,10 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">                       
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> My Ticket(s)</a>
+                            <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> Ticket(s) Inbox</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url(); ?>home/svr_status"><i class="fa fa-dashboard fa-fw"></i> Server Status</a>
                         </li>
                         <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->
@@ -276,10 +281,10 @@
                         </li>
                         <!-- <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li> -->
+                        </li> 
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Create Ticket</a>
-                        </li>
+                            <a href="<?php //echo base_url(); ?>home/crticket"><i class="fa fa-edit fa-fw"></i> Change</a>
+                        </li> -->
                         
                         <li>
                             <!-- <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a> -->
@@ -305,102 +310,78 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">Dashboard</h1>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    <div>New Comments!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+
+            <!-- modified by eri sunarko : -->
+            <div class="panel panel-primary">
+                <div class="panel-heading">Filter ticket(s) by date :</div>
+                    <div class="panel-body">
+                        <form method="POST" action="<?php echo base_url(); ?>home/filter">
+                            Start date &nbsp; : <input type="date" name="start_date" required />
+                            <br>
+                            End date  &nbsp; : <input type="date" name="end_date" required />
+                            <br>
+                            <input type="submit" value="Filter" />
+                        </form>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-green">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-tasks fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr id = "table_header">
+                                <th>Ticket ID</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Date Created</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Serviced by</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+
+                                if (isset($filterRes) || !empty($filterRes))
+                                {
+                                    //print_r($filterRes);
+                                    foreach ($filterRes as $ticket) {
+                                        echo "<tr class='clickable_row' data_href='" . $ticket['ticket_id'] . "'>";
+                                            echo "<td>" . $ticket['ticket_id'] . "</td>";
+                                            echo "<td>" . $ticket['title'] . "</td>";
+                                            echo "<td>" . $ticket['description'] . "</td>";
+                                            echo "<td>" . $ticket['date_created'] . "</td>";
+                                            echo "<td>" . $ticket['status'] . "</td>";
+                                            echo "<td>" . $ticket['progress'] . "</td>";
+                                            echo "<td>" . $ticket['service_by'] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                                
+                                if (isset($dataTicket) || !empty($dataTicket))
+                                {
+                                    //print_r($dataTicket);
+                                    foreach ($dataTicket as $ticket) {
+                                        echo "<tr class='clickable_row' data_href='" . $ticket['ticket_id'] . "'>";
+                                            echo "<td>" . $ticket['ticket_id'] . "</td>";
+                                            echo "<td>" . $ticket['title'] . "</td>";
+                                            echo "<td>" . $ticket['description'] . "</td>";
+                                            echo "<td>" . $ticket['date_created'] . "</td>";
+                                            echo "<td>" . $ticket['status'] . "</td>";
+                                            echo "<td>" . $ticket['progress'] . "</td>";
+                                            echo "<td>" . $ticket['service_by'] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                }
+                                
+                                ?> 
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-yellow">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-red">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <i class="fa fa-support fa-5x"></i>
-                                </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="#">
-                            <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                <div class="clearfix"></div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                </form>
             </div>
-            <!-- /.row -->
             
-                    </div>
+            
+        </div>
                     <!-- /.panel .chat-panel -->
                 </div>
                 <!-- /.col-lg-4 -->
@@ -428,7 +409,22 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="<?php echo base_url().'assets'; ?>/dist/js/sb-admin-2.js"></script>
-
+	
+	<script>
+		$(document).ready(function(){
+			// ~ make sure custom js loaded properly :
+			console.log('Custom Js loaded!');
+			
+			// ~ trigger on click table row :
+			$('.clickable_row').on('click', function(){
+				let rowId = $(this).attr('data_href');
+				window.location = '<?php echo base_url(); ?>' + '/home/take_action/' + rowId;
+			});
+			
+			// ~
+		});
+	</script>
+	
 </body>
 
 </html>

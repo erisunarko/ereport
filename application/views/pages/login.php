@@ -45,13 +45,12 @@
                     </div>
                     <div class="panel-body">
                         <?php 
-                            //echo password_hash('admin', PASSWORD_BCRYPT); 
-                            //var_dump($y);
+                            //print_r($db);
                         ?>
                         <form method="POST" action="<?php echo base_url(); ?>login/auth" role="form">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Employee ID" name="employee_id" type="employee_id" autofocus>
+                                    <input class="form-control" placeholder="Employee ID" name="employee_id" type="employee_id" autocomplete="off" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="password" type="password" value="">

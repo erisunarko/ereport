@@ -103,6 +103,83 @@
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 2</strong>
+                                        <span class="pull-right text-muted">20% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            <span class="sr-only">20% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 3</strong>
+                                        <span class="pull-right text-muted">60% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                            <span class="sr-only">60% Complete (warning)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 4</strong>
+                                        <span class="pull-right text-muted">80% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                            <span class="sr-only">80% Complete (danger)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Tasks</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-tasks -->
+                </li>
+                <!-- /.dropdown -->
                 <li class="dropdown">
                     <!-- <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -186,7 +263,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">                       
                         <li>
-                            <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> My Ticket(s)</a>
+                            <a href="<?php echo base_url(); ?>home"><i class="fa fa-dashboard fa-fw"></i> Ticket(s) Inbox</a>
                         </li>
                         <li>
                             <!-- <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a> -->
@@ -200,13 +277,6 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <!-- <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li> -->
-                        <li>
-                            <a href="<?php echo base_url(); ?>home/crticket"><i class="fa fa-edit fa-fw"></i> Create Ticket</a>
-                        </li>
-                        
                         <li>
                             <!-- <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a> -->
                             <ul class="nav nav-second-level">
@@ -229,28 +299,28 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Change Password :</h1>
+                    <h1 class="page-header">User Profile :</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- eri sunarko -->
             <div class="row">
                 <div class="col-lg-3 col-md-6">
-                    <form method="POST" action="<?php echo base_url(); ?>home/cpass">
-                        <label for="old_password">Old password :</label>
-                        <br>
-                        <input type="text" name="old_password" required />
-                        <br> 
-                        <label for="new_password">New password :</label>
-                        <br>
-                        <input type="text" name="new_password" required />
-                        <br>     
-                        <label for="re_newpass">Re-type new password :</label>
-                        <br>
-                        <input type="text" name="re_newpass" required />
-                        <br>                            
-                        <input type="submit" />
-                    </form>
+                    <label>Employee ID :</label>
+                    <br>
+                    <input type="text" value="<?php echo $dataUser[0]['employee_id']; ?>" />
+                    <br>
+                    <label>Employee Name :</label>
+                    <br>
+                    <input type="text" value="<?php echo $dataUser[0]['employee_name']; ?>" />
+                    <br>
+                    <label>Employee Position :</label>
+                    <br>
+                    <input type="text" value="<?php echo $dataUser[0]['employee_position']; ?>" />
+                    <br>
+                    <label>Date Created :</label>
+                    <br>
+                    <input type="text" value="<?php echo $dataUser[0]['date_created']; ?>" />
                 </div>
             </div>
             <!-- eri sunarko -->
